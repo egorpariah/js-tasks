@@ -1,16 +1,15 @@
-var vowels = ['а', 'у', 'о', 'ы', 'э', 'я', 'ю', 'ё', 'и', 'е'];
+const vowels = ['а', 'у', 'о', 'ы', 'э', 'я', 'ю', 'ё', 'и', 'е'];
 const input = 'Все любят своеволие, но страшатся свободы.';
 
-function getVowels(string) {
-  var output = [];
+const getVowels = string => {
+  string = string.toLowerCase();
+  let output = '';
 
   for (let i = 0; i < string.length; i++) {
-    for (let j = 0; j < vowels.length; j++) {
-      if (string[i] == vowels[j]) {
+      if (vowels.includes(string[i])) {
         output += string[i];
       }
     }
-  }
 
   return output;
 }

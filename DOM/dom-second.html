@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>#2 Модальное окно</title>
+  <style>
+    body {
+      height: 100vh;
+      width: 100%;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 24px;
+    }
+
+    .page {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .page__content {
+      width: 75%;
+      color: dimgray;
+      text-align: center;
+    }
+
+    .page__button {
+      border: none;
+      color: white;
+      background-color: cornflowerblue;
+      padding: 12px 36px;
+      border-radius: 6px;
+    }
+
+    .page__button:hover {
+      background-color: darkslateblue;
+    }
+
+    .page__button:active {
+      padding: 12px 32px;
+    }
+
+    .page__overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .page__popup {
+      position: relative;
+      width: 20%;
+      height: 35%;
+      padding: 30px 60px;
+      border-radius: 16px;
+      background-color: lightgreen;
+      color: slategray;
+    }
+
+    .page__close {
+      border: none;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      background-color: crimson;
+      width: 24px;
+      height: 24px;
+      right: -34px;
+      top: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="page__overlay"></div>
+    <p class="page__content">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae obcaecati a molestiae voluptates,
+      dignissimos reprehenderit modi eius esse maxime. Optio delectus quod maiores reprehenderit nisi obcaecati fugiat
+      hic minus ab?
+    </p>
+    <button class="page__button">Open</button>
+  </div>
+
+  <script type="text/javascript">
+    var button = document.querySelector('.page__button');
+    var overlay = document.querySelector('.page__overlay');
+
+    button.addEventListener('click', function () {
+      overlay.style.display = 'flex';
+
+      let popup = document.createElement('div');
+      popup.classList.add('page__popup');
+      popup.innerHTML = 'Hello, world!';
+
+      let closeBtn = document.createElement('button');
+      closeBtn.classList.add('page__close');
+      closeBtn.innerHTML = 'x';
+
+      overlay.appendChild(popup);
+      popup.appendChild(closeBtn);
+    });
+
+    overlay.addEventListener('click', function (e) {
+      if (!e.target.classList.contains('page__popup')) {
+        overlay.removeAttribute('style');
+        overlay.removeChild(overlay.firstChild);
+      }
+    });
+
+
+  </script>
+</body>
+
+</html>

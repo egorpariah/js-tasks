@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>#1 Простой слайдер</title>
+  <style>
+    body {
+      font-size: 32px;
+      font-family: Arial, Helvetica, sans-serif;
+      height: 100vh;
+    }
+
+    .slider {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .slider__container {
+      width: 316px;
+      margin: 0 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slider__list {
+      transition-duration: 0.5s;
+      transition-property: all;
+      position: relative;
+      left: 0;
+      width: 100%;
+      padding: 0;
+      list-style: none;
+      display: flex;
+    }
+
+    .slider__element {
+      flex-shrink: 0;
+      display: flex;
+      width: 100px;
+      height: 100px;
+      align-items: center;
+      justify-content: center;
+      background-color: antiquewhite;
+      border: 1px solid slategrey;
+      margin-right: 5px;
+    }
+
+    .slider__element:last-child {
+      margin-right: 0;
+    }
+
+    .slider__button {
+      font-size: 24px;
+      width: 50px;
+      height: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slider">
+    <button class="slider__button slider__button--left"><</button>
+        <div class="slider__container">
+          <ul class="slider__list">
+            <li class="slider__element">1</li>
+            <li class="slider__element">2</li>
+            <li class="slider__element">3</li>
+            <li class="slider__element">4</li>
+            <li class="slider__element">5</li>
+            <li class="slider__element">6</li>
+            <li class="slider__element">7</li>
+            <li class="slider__element">8</li>
+          </ul>
+        </div>
+        <button class="slider__button slider__button--right">></button>
+  </div>
+
+  <script type="text/javascript">
+    var sliderList = document.querySelector('.slider__list');
+    var btnLeft = document.querySelector('.slider__button--left');
+    var btnRight = document.querySelector('.slider__button--right');
+    var block = document.querySelector('.slider__element')
+    var computed = window.getComputedStyle(sliderList);
+    var blockWidth = window.getComputedStyle(block).getPropertyValue('width');
+    var shift = 0;
+
+    btnLeft.disabled = true;
+
+    btnRight.addEventListener('click', rightSwipe);
+    btnLeft.addEventListener('click', leftSwipe);
+
+    window.addEventListener('keydown', function(e) {
+      if (event.key == 'ArrowRight' && btnRight.disabled == false) {
+        rightSwipe();
+      } else if (event.key == 'ArrowLeft' && btnLeft.disabled == false) {
+        leftSwipe();
+      }
+    });
+
+    function rightSwipe (e) {
+      shift += -(parseInt(blockWidth) + 7);
+      sliderList.style.left = shift + 'px';
+
+      if (parseInt(sliderList.style.left) < 0) {
+        btnLeft.disabled = false;
+      }
+
+      if (parseInt(sliderList.style.left) < -500) {
+        btnRight.disabled = true;
+      }
+
+      console.log(sliderList.style.left);
+    };
+
+    function leftSwipe (e) {
+      shift += parseInt(blockWidth) + 7;
+      sliderList.style.left = shift + 'px';
+
+      if (parseInt(sliderList.style.left) > -500) {
+        btnRight.disabled = false;
+      }
+
+      if (parseInt(sliderList.style.left) == 0) {
+        btnLeft.disabled = true;
+      }
+    };
+  </script>
+</body>
+
+</html>

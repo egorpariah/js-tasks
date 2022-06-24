@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>#3 Создание и работа с DOM</title>
+  <style>
+    .form {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .form__number {
+      margin-right: 5px;
+    }
+
+    .blocks {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .block {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+      border: 1px solid black;
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+
+    .block:last-child {
+      margin-right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <form class="form">
+      <input class="form__number" type="number" name="number" min="0">
+      <input class="form__color" type="color" name="color">
+    </form>
+    <div class="blocks"></div>
+  </div>
+
+  <script type="text/javascript">
+    var form = document.querySelector('.form');
+    var blocks = document.querySelector('.blocks');
+    var c = 0;
+
+    form.elements.number.addEventListener('keydown', function (e) {
+      if (e.key == 'Enter') {
+        e.preventDefault();
+
+        while (blocks.firstChild) {
+          blocks.removeChild(blocks.firstChild);
+        }
+
+        for (let i = 0; i < form.elements.number.value; i++) {
+          var block = document.createElement('div');
+          block.classList.add('block');
+          blocks.appendChild(block);
+          block.innerHTML = i + 1;
+        }
+      }
+    });
+
+    form.elements.number.addEventListener('change', function () {
+      while (blocks.firstChild) {
+        blocks.removeChild(blocks.firstChild);
+      }
+
+      for (let i = 0; i < form.elements.number.value; i++) {
+        let block = document.createElement('div');
+        block.classList.add('block');
+        blocks.appendChild(block);
+        block.innerHTML = i + 1;
+      }
+    });
+
+    form.elements.color.addEventListener('change', function () {
+      let block = document.getElementsByClassName('block')
+
+      if (c == 0) {
+        for (let i = 0; i < blocks.childElementCount; i++) {
+          (i + 1) % 2 != 0 ?
+            block[i].style.background = form.elements.color.value
+            :
+            block[i].style.background = 'white';
+        }
+
+        c = 1;
+      } else {
+        for (let i = 0; i < blocks.childElementCount; i++) {
+          (i + 1) % 2 == 0 ?
+            block[i].style.background = form.elements.color.value
+            :
+            block[i].style.background = 'white';
+        }
+
+        c = 0;
+      }
+
+      //   for (let i = 0; i < blocks.childElementCount; i++) {
+      //     (i + 1) % 2 != 0 ? (
+      //       block[i].style.background = form.elements.color.value;
+      //     c = 1;
+      //     ) : (
+      //   block[i].style.background = form.elements.color.value;
+      // c = 1;
+      //     );      
+      //     }
+      //   }
+    });
+  </script>
+</body>
+
+</html>
